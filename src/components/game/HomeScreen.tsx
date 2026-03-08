@@ -154,7 +154,7 @@ export default function HomeScreen({ engine }: Props) {
             <img
               src={activeChar.image}
               alt={activeChar.name}
-              className={`w-40 h-40 object-cover rounded-xl transition-transform duration-100 animate-float ${clicking ? 'scale-110' : 'scale-100'}`}
+              className={`w-40 h-40 object-cover rounded-xl transition-transform duration-100 ${clicking ? 'scale-110' : 'scale-100'}`}
               style={{
                 filter: 'drop-shadow(0 0 20px rgba(212,160,23,0.4))',
                 maskImage: 'linear-gradient(to bottom, black 60%, transparent 100%)',
