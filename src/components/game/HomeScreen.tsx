@@ -70,22 +70,75 @@ export default function HomeScreen({ engine }: Props) {
 
       {/* Boss section */}
       {!state.bossActive ? (
-        <div className="card-epic rounded-2xl p-4 mb-4 text-center">
-          <div className="font-rajdhani text-xs mb-1" style={{ color: 'rgba(212,160,23,0.6)' }}>СЛЕДУЮЩИЙ ПРОТИВНИК</div>
+        <div className="rounded-2xl mb-4 overflow-hidden relative"
+          style={{
+            background: 'linear-gradient(135deg, rgba(26,26,46,0.95) 0%, rgba(10,10,15,0.98) 100%)',
+            border: '1px solid rgba(204,34,0,0.25)',
+            boxShadow: '0 0 30px rgba(204,34,0,0.1) inset',
+          }}>
           {currentBoss ? (
             <>
-              <div className="text-4xl mb-1">{currentBoss.emoji}</div>
-              <div className="font-cinzel font-bold text-lg text-gold-light">{currentBoss.name}</div>
-              <div className="font-rajdhani text-sm mb-3" style={{ color: 'rgba(212,160,23,0.6)' }}>{currentBoss.title}</div>
-              <div className="font-rajdhani text-xs mb-3" style={{ color: '#9CA3AF' }}>{currentBoss.description}</div>
-              <button onClick={startBossFight}
-                className="btn-crimson px-6 py-2 rounded-xl font-bold text-sm w-full"
-                style={{ fontFamily: 'Cinzel, serif' }}>
-                ⚔️ СРАЗИТЬСЯ С БОССОМ
-              </button>
+              {/* Hero image full-width */}
+              <div className="relative h-52 overflow-hidden">
+                <img
+                  src="https://cdn.poehali.dev/projects/c08227df-27ea-40bf-a221-a87bc3b01e6d/files/06de4007-5acf-4ea0-b238-9e2fc65de7ea.jpg"
+                  alt="epic hero"
+                  className="w-full h-full object-cover object-top"
+                  style={{ filter: 'saturate(1.3) contrast(1.1)' }}
+                />
+                {/* Gradient overlay bottom */}
+                <div className="absolute inset-0"
+                  style={{ background: 'linear-gradient(to bottom, transparent 30%, rgba(10,10,15,0.98) 100%)' }} />
+                {/* Glow overlay */}
+                <div className="absolute inset-0"
+                  style={{ background: 'radial-gradient(ellipse at 50% 80%, rgba(212,160,23,0.08) 0%, transparent 70%)' }} />
+                {/* Rune corners */}
+                <div className="absolute top-3 left-3 text-xl opacity-30" style={{ color: '#D4A017' }}>᚛</div>
+                <div className="absolute top-3 right-3 text-xl opacity-30" style={{ color: '#D4A017' }}>᚜</div>
+                {/* Label */}
+                <div className="absolute top-3 left-0 right-0 text-center">
+                  <span className="font-rajdhani text-xs px-3 py-1 rounded-full"
+                    style={{ background: 'rgba(204,34,0,0.3)', color: '#FF6644', border: '1px solid rgba(204,34,0,0.4)', letterSpacing: '0.1em' }}>
+                    ⚠️ СЛЕДУЮЩИЙ ПРОТИВНИК
+                  </span>
+                </div>
+                {/* Boss name overlay */}
+                <div className="absolute bottom-3 left-0 right-0 text-center px-4">
+                  <div className="font-cinzel font-bold text-xl text-gold-light" style={{ textShadow: '0 0 20px rgba(212,160,23,0.8)' }}>
+                    {currentBoss.name}
+                  </div>
+                  <div className="font-rajdhani text-xs" style={{ color: 'rgba(212,160,23,0.6)', letterSpacing: '0.15em' }}>
+                    {currentBoss.emoji} {currentBoss.title.toUpperCase()}
+                  </div>
+                </div>
+              </div>
+              {/* Info + button */}
+              <div className="p-3">
+                <div className="font-rajdhani text-xs text-center mb-3" style={{ color: '#6B7280' }}>
+                  {currentBoss.description}
+                </div>
+                {/* Stats row */}
+                <div className="flex justify-around mb-3">
+                  {[
+                    { label: 'HP', value: (currentBoss.maxHp / 1000).toFixed(0) + 'k', icon: '❤️' },
+                    { label: 'Награда', value: (currentBoss.reward / 1000).toFixed(1) + 'k 💰', icon: '🎁' },
+                    { label: 'Стихия', value: currentBoss.element, icon: '⚡' },
+                  ].map(s => (
+                    <div key={s.label} className="text-center">
+                      <div className="font-rajdhani text-xs" style={{ color: '#6B7280' }}>{s.label}</div>
+                      <div className="font-cinzel text-sm font-bold text-gold-light">{s.value}</div>
+                    </div>
+                  ))}
+                </div>
+                <button onClick={startBossFight}
+                  className="btn-crimson px-6 py-2.5 rounded-xl font-bold text-sm w-full"
+                  style={{ fontFamily: 'Cinzel, serif', letterSpacing: '0.05em' }}>
+                  ⚔️ СРАЗИТЬСЯ С БОССОМ
+                </button>
+              </div>
             </>
           ) : (
-            <div className="text-gray-500 font-rajdhani">Все боссы побеждены!</div>
+            <div className="p-6 text-center text-gray-500 font-rajdhani">Все боссы побеждены!</div>
           )}
         </div>
       ) : (
