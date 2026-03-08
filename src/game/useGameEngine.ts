@@ -9,7 +9,14 @@ export const useGameEngine = () => {
       const saved = localStorage.getItem(SAVE_KEY);
       if (saved) {
         const parsed = JSON.parse(saved);
-        return { ...createInitialState(), ...parsed };
+        const initial = createInitialState();
+        // Restore achievement condition functions (lost during JSON serialization)
+        const achievements = initial.achievements.map(a => ({
+          ...a,
+          ...(parsed.achievements?.find((pa: { id: string }) => pa.id === a.id) || {}),
+          condition: a.condition,
+        }));
+        return { ...initial, ...parsed, achievements };
       }
     } catch (e) {
       console.warn('Save load failed', e);
