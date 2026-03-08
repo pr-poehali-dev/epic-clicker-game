@@ -122,6 +122,10 @@ export interface GameState {
 export const WARRIOR_IMG = 'https://cdn.poehali.dev/projects/c08227df-27ea-40bf-a221-a87bc3b01e6d/files/b22616ba-af40-4030-a390-2495ec2669c1.jpg';
 export const MAGE_IMG = 'https://cdn.poehali.dev/projects/c08227df-27ea-40bf-a221-a87bc3b01e6d/files/1784fc3c-5943-4d82-9005-080b7033222b.jpg';
 export const BOSS_IMG = 'https://cdn.poehali.dev/projects/c08227df-27ea-40bf-a221-a87bc3b01e6d/files/e2266a3c-33f7-49a3-aecb-cf511f288ed7.jpg';
+export const GOBLIN_KING_IMG = 'https://cdn.poehali.dev/projects/c08227df-27ea-40bf-a221-a87bc3b01e6d/files/1e565987-f17f-4a0e-a24d-39c1155e51e5.jpg';
+export const ICE_WRAITH_IMG = 'https://cdn.poehali.dev/projects/c08227df-27ea-40bf-a221-a87bc3b01e6d/files/4cc30a57-a159-4cef-bad1-cab26b89cd67.jpg';
+export const DEMON_LORD_IMG = 'https://cdn.poehali.dev/projects/c08227df-27ea-40bf-a221-a87bc3b01e6d/files/a2a4e05a-dcc0-4a1c-b007-612a88161623.jpg';
+export const ANCIENT_DRAGON_IMG = 'https://cdn.poehali.dev/projects/c08227df-27ea-40bf-a221-a87bc3b01e6d/files/93fb9c68-bf47-40a8-8c05-83bbb78c108c.jpg';
 
 export const initialCharacters: Character[] = [
   {
@@ -273,22 +277,22 @@ export const initialUpgrades: Upgrade[] = [
 
 export const initialBosses: Boss[] = [
   {
-    id: 'goblin_king', name: 'Горбрак', title: 'Король Гоблинов', image: BOSS_IMG, emoji: '👺',
+    id: 'goblin_king', name: 'Горбрак', title: 'Король Гоблинов', image: GOBLIN_KING_IMG, emoji: '👺',
     hp: 1000, maxHp: 1000, reward: 500, defeated: false, unlockAt: 0,
     description: 'Мелкий, но хитрый. Первый на пути к величию.', element: 'Земля',
   },
   {
-    id: 'ice_wraith', name: 'Мразиэль', title: 'Ледяной Призрак', image: BOSS_IMG, emoji: '👻',
+    id: 'ice_wraith', name: 'Мразиэль', title: 'Ледяной Призрак', image: ICE_WRAITH_IMG, emoji: '👻',
     hp: 5000, maxHp: 5000, reward: 2000, defeated: false, unlockAt: 1,
     description: 'Дух вечной зимы. Замораживает всё живое.', element: 'Лёд',
   },
   {
-    id: 'demon_lord', name: 'Малфариус', title: 'Лорд Демонов', image: BOSS_IMG, emoji: '😈',
+    id: 'demon_lord', name: 'Малфариус', title: 'Лорд Демонов', image: DEMON_LORD_IMG, emoji: '😈',
     hp: 25000, maxHp: 25000, reward: 10000, defeated: false, unlockAt: 2,
     description: 'Повелитель Преисподней. Его взгляд сжигает душу.', element: 'Огонь',
   },
   {
-    id: 'ancient_dragon', name: 'Хаоракс', title: 'Древний Дракон', image: BOSS_IMG, emoji: '🐉',
+    id: 'ancient_dragon', name: 'Хаоракс', title: 'Древний Дракон', image: ANCIENT_DRAGON_IMG, emoji: '🐉',
     hp: 100000, maxHp: 100000, reward: 50000, defeated: false, unlockAt: 3,
     description: 'Живёт тысячелетия. Его дыхание испепеляет армии.', element: 'Хаос',
   },

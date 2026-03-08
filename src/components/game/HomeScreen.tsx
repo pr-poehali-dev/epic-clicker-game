@@ -162,8 +162,8 @@ export default function HomeScreen({ engine }: Props) {
             <>
               <div className="relative h-52 overflow-hidden">
                 <img
-                  src="https://cdn.poehali.dev/projects/c08227df-27ea-40bf-a221-a87bc3b01e6d/files/06de4007-5acf-4ea0-b238-9e2fc65de7ea.jpg"
-                  alt="epic hero"
+                  src={currentBoss.image}
+                  alt={currentBoss.name}
                   className="w-full h-full object-cover object-top"
                   style={{ filter: 'saturate(1.3) contrast(1.1)' }}
                 />
