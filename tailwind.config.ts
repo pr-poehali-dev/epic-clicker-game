@@ -137,6 +137,10 @@ export default {
 				'particle': {
 					'0%': { transform: 'translate(0, 0) scale(1)', opacity: '1' },
 					'100%': { transform: 'translate(var(--tx), var(--ty)) scale(0)', opacity: '0' }
+				},
+				'slide-in-up': {
+					'0%': { transform: 'translateY(100%)', opacity: '0' },
+					'100%': { transform: 'translateY(0)', opacity: '1' }
 				}
 			},
 			animation: {
@@ -150,6 +154,7 @@ export default {
 				'screen-glow': 'screen-glow 3s ease-in-out infinite',
 				'slide-up': 'slide-up 0.4s ease-out',
 				'rune-spin': 'rune-spin 8s linear infinite',
+				'slide-in-up': 'slide-in-up 0.35s cubic-bezier(0.32, 0.72, 0, 1)',
 			}
 		}
 	},
