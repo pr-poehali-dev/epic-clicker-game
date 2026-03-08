@@ -119,8 +119,12 @@ export interface GameState {
   };
 }
 
-export const WARRIOR_IMG = 'https://cdn.poehali.dev/projects/c08227df-27ea-40bf-a221-a87bc3b01e6d/files/b22616ba-af40-4030-a390-2495ec2669c1.jpg';
-export const MAGE_IMG = 'https://cdn.poehali.dev/projects/c08227df-27ea-40bf-a221-a87bc3b01e6d/files/1784fc3c-5943-4d82-9005-080b7033222b.jpg';
+export const WARRIOR_IMG = 'https://cdn.poehali.dev/projects/c08227df-27ea-40bf-a221-a87bc3b01e6d/files/66f20541-a471-46af-841f-f69effc25ead.jpg';
+export const MAGE_IMG = 'https://cdn.poehali.dev/projects/c08227df-27ea-40bf-a221-a87bc3b01e6d/files/1439461b-6c65-4ec5-a2f1-e40d0a5f1855.jpg';
+export const PALADIN_IMG = 'https://cdn.poehali.dev/projects/c08227df-27ea-40bf-a221-a87bc3b01e6d/files/ca9eacc3-0100-4ecb-a602-3d9b7563fa53.jpg';
+export const BERSERKER_IMG = 'https://cdn.poehali.dev/projects/c08227df-27ea-40bf-a221-a87bc3b01e6d/files/9a51c306-600d-4e19-81bb-415dc7b65333.jpg';
+export const NECROMANCER_IMG = 'https://cdn.poehali.dev/projects/c08227df-27ea-40bf-a221-a87bc3b01e6d/files/fc8525ea-2e34-4061-8c53-66ce491699a6.jpg';
+export const DRUID_IMG = 'https://cdn.poehali.dev/projects/c08227df-27ea-40bf-a221-a87bc3b01e6d/files/02c2a80f-233b-4d54-921d-bbf2ccf8076b.jpg';
 export const BOSS_IMG = 'https://cdn.poehali.dev/projects/c08227df-27ea-40bf-a221-a87bc3b01e6d/files/e2266a3c-33f7-49a3-aecb-cf511f288ed7.jpg';
 export const GOBLIN_KING_IMG = 'https://cdn.poehali.dev/projects/c08227df-27ea-40bf-a221-a87bc3b01e6d/files/1e565987-f17f-4a0e-a24d-39c1155e51e5.jpg';
 export const ICE_WRAITH_IMG = 'https://cdn.poehali.dev/projects/c08227df-27ea-40bf-a221-a87bc3b01e6d/files/4cc30a57-a159-4cef-bad1-cab26b89cd67.jpg';
@@ -178,7 +182,7 @@ export const initialCharacters: Character[] = [
     title: 'Светлая Судья',
     class: 'Паладин',
     rarity: 'rare',
-    image: WARRIOR_IMG,
+    image: PALADIN_IMG,
     emoji: '🛡️',
     level: 1,
     maxLevel: 50,
@@ -200,7 +204,7 @@ export const initialCharacters: Character[] = [
     title: 'Ярость Севера',
     class: 'Берсерк',
     rarity: 'rare',
-    image: WARRIOR_IMG,
+    image: BERSERKER_IMG,
     emoji: '🪓',
     level: 1,
     maxLevel: 50,
@@ -222,7 +226,7 @@ export const initialCharacters: Character[] = [
     title: 'Владыка Мёртвых',
     class: 'Некромант',
     rarity: 'epic',
-    image: MAGE_IMG,
+    image: NECROMANCER_IMG,
     emoji: '💀',
     level: 1,
     maxLevel: 50,
@@ -244,7 +248,7 @@ export const initialCharacters: Character[] = [
     title: 'Голос Леса',
     class: 'Друид',
     rarity: 'legendary',
-    image: MAGE_IMG,
+    image: DRUID_IMG,
     emoji: '🌿',
     level: 1,
     maxLevel: 50,
