@@ -1,3 +1,4 @@
+import { useState, useCallback } from 'react';
 import { formatNumber } from '@/game/gameState';
 
 interface Props {
@@ -62,11 +63,31 @@ const typeLabel: Record<string, string> = {
 
 export default function ShopScreen({ engine }: Props) {
   const { state, buyCharacter } = engine;
+  const [flash, setFlash] = useState<{ color: string; rarity: string } | null>(null);
+
+  const handleBuyCharacter = useCallback((charId: string) => {
+    const char = state.characters.find(c => c.id === charId);
+    if (!char) return;
+    buyCharacter?.(charId);
+    const rc = rarityColors[char.rarity] || char.color;
+    setFlash({ color: rc, rarity: char.rarity });
+    setTimeout(() => setFlash(null), 900);
+  }, [state.characters, buyCharacter]);
 
   const shopCharacters = state.characters.filter(c => !c.owned && c.cost > 0);
 
   return (
-    <div className="p-4 max-w-lg mx-auto">
+    <div className="p-4 max-w-lg mx-auto relative">
+      {/* Flash overlay */}
+      {flash && (
+        <div
+          className="fixed inset-0 z-50 pointer-events-none animate-hero-flash"
+          style={{
+            background: `radial-gradient(ellipse at center, ${flash.color}66 0%, ${flash.color}22 50%, transparent 80%)`,
+          }}
+        />
+      )}
+
       <div className="font-cinzel text-xl font-bold text-gold-light glow-text-gold mb-1 text-center">🏪 МАГАЗИН</div>
       <div className="font-rajdhani text-center text-sm mb-2" style={{ color: 'rgba(212,160,23,0.6)' }}>
         Приобретай редкие артефакты и усиления
@@ -156,7 +177,7 @@ export default function ShopScreen({ engine }: Props) {
                       </div>
                       <button
                         disabled={!canAfford}
-                        onClick={() => buyCharacter?.(char.id)}
+                        onClick={() => handleBuyCharacter(char.id)}
                         className="rounded-lg px-3 py-1 font-cinzel text-xs font-bold transition-all active:scale-95"
                         style={{
                           background: canAfford
