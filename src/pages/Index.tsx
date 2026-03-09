@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { useGameEngine } from '@/game/useGameEngine';
 import HomeScreen from '@/components/game/HomeScreen';
 import CharactersScreen from '@/components/game/CharactersScreen';
@@ -11,12 +11,21 @@ import SettingsScreen from '@/components/game/SettingsScreen';
 import NavBar from '@/components/game/NavBar';
 import TopBar from '@/components/game/TopBar';
 import LeaderboardScreen from '@/components/game/LeaderboardScreen';
+import RankUpNotification from '@/components/game/RankUpNotification';
+import { useRankTracker, RankUpEvent } from '@/hooks/useRankTracker';
 
 type Screen = 'home' | 'characters' | 'upgrades' | 'achievements' | 'leaderboard' | 'inventory' | 'shop' | 'stats' | 'settings';
 
 export default function Index() {
   const [screen, setScreen] = useState<Screen>('home');
   const engine = useGameEngine();
+  const [rankUpEvent, setRankUpEvent] = useState<RankUpEvent | null>(null);
+
+  const handleRankUp = useCallback((event: RankUpEvent) => {
+    setRankUpEvent(event);
+  }, []);
+
+  useRankTracker(handleRankUp);
 
   if (!engine.dbLoaded) {
     return (
@@ -47,6 +56,7 @@ export default function Index() {
   return (
     <div className="min-h-screen flex flex-col" style={{ background: 'radial-gradient(ellipse at top, #1A1A2E 0%, #0A0A0F 70%)' }}>
       <TopBar engine={engine} screen={screen} />
+      <RankUpNotification event={rankUpEvent} onClose={() => setRankUpEvent(null)} />
       <main className="flex-1 overflow-y-auto pb-20">
         <div key={screen} className="animate-slide-up">
           {renderScreen()}
