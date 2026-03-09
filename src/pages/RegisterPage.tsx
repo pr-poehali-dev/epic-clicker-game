@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 import { apiRegister } from '@/api/auth';
 import Icon from '@/components/ui/icon';
+import OnlineBadge from '@/components/game/OnlineBadge';
 
 export default function RegisterPage() {
   const navigate = useNavigate();
@@ -65,6 +66,9 @@ export default function RegisterPage() {
             <span className="font-cinzel text-3xl font-black text-white tracking-widest">CLICKER</span>
           </Link>
           <p className="text-white/40 font-rajdhani mt-2 tracking-wide">Твоя легенда начинается здесь</p>
+          <div className="flex justify-center mt-3">
+            <OnlineBadge />
+          </div>
         </div>
 
         {/* Rarity hint */}
