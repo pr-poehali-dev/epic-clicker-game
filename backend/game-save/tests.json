@@ -1,0 +1,13 @@
+{
+  "tests": [
+    {
+      "name": "Load save (no auth)",
+      "method": "POST",
+      "path": "/",
+      "body": {"action": "load"},
+      "expectedStatus": 401,
+      "expectedBody": {"error": "string"},
+      "bodyMatcher": "partial"
+    }
+  ]
+}

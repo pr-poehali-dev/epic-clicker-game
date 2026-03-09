@@ -17,6 +17,17 @@ export default function Index() {
   const [screen, setScreen] = useState<Screen>('home');
   const engine = useGameEngine();
 
+  if (!engine.dbLoaded) {
+    return (
+      <div className="min-h-screen flex items-center justify-center" style={{ background: 'radial-gradient(ellipse at top, #1A1A2E 0%, #0A0A0F 70%)' }}>
+        <div className="text-center">
+          <div className="text-6xl mb-4 animate-float">⚔️</div>
+          <p className="font-cinzel text-gold-light text-lg tracking-widest glow-text-gold">Загружаю прогресс...</p>
+        </div>
+      </div>
+    );
+  }
+
   const renderScreen = () => {
     switch (screen) {
       case 'home': return <HomeScreen engine={engine} />;

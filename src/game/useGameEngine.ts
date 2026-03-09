@@ -1,28 +1,41 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { GameState, createInitialState, formatNumber } from './gameState';
+import { apiSaveGame, apiLoadGame } from '@/api/gameSave';
 
 const SAVE_KEY = 'epic_clicker_save_v1';
+
+function mergeState(parsed: object): GameState {
+  const initial = createInitialState();
+  const achievements = initial.achievements.map(a => ({
+    ...a,
+    ...((parsed as GameState).achievements?.find((pa: { id: string }) => pa.id === a.id) || {}),
+    condition: a.condition,
+  }));
+  return { ...initial, ...(parsed as GameState), achievements };
+}
 
 export const useGameEngine = () => {
   const [state, setState] = useState<GameState>(() => {
     try {
       const saved = localStorage.getItem(SAVE_KEY);
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        const initial = createInitialState();
-        // Restore achievement condition functions (lost during JSON serialization)
-        const achievements = initial.achievements.map(a => ({
-          ...a,
-          ...(parsed.achievements?.find((pa: { id: string }) => pa.id === a.id) || {}),
-          condition: a.condition,
-        }));
-        return { ...initial, ...parsed, achievements };
-      }
+      if (saved) return mergeState(JSON.parse(saved));
     } catch (e) {
       console.warn('Save load failed', e);
     }
     return createInitialState();
   });
+
+  const [dbLoaded, setDbLoaded] = useState(false);
+
+  useEffect(() => {
+    apiLoadGame().then(data => {
+      if (data) {
+        setState(mergeState(data as object));
+        localStorage.setItem(SAVE_KEY, JSON.stringify(data));
+      }
+      setDbLoaded(true);
+    }).catch(() => setDbLoaded(true));
+  }, []);
 
   const [particles, setParticles] = useState<Array<{ id: number; x: number; y: number; value: number }>>([]);
   const [bossShake, setBossShake] = useState(false);
@@ -202,9 +215,24 @@ export const useGameEngine = () => {
     });
   }, []);
 
+  useEffect(() => {
+    const handleUnload = () => {
+      setState(prev => {
+        const toSave = { ...prev, lastSave: Date.now() };
+        localStorage.setItem(SAVE_KEY, JSON.stringify(toSave));
+        apiSaveGame(toSave);
+        return prev;
+      });
+    };
+    window.addEventListener('beforeunload', handleUnload);
+    return () => window.removeEventListener('beforeunload', handleUnload);
+  }, []);
+
   const resetGame = useCallback(() => {
     localStorage.removeItem(SAVE_KEY);
-    setState(createInitialState());
+    const fresh = createInitialState();
+    apiSaveGame({ ...fresh, lastSave: Date.now() });
+    setState(fresh);
   }, []);
 
   useEffect(() => {
@@ -250,12 +278,14 @@ export const useGameEngine = () => {
   useEffect(() => {
     const saveInterval = setInterval(() => {
       setState(prev => {
-        localStorage.setItem(SAVE_KEY, JSON.stringify({ ...prev, lastSave: Date.now() }));
+        const toSave = { ...prev, lastSave: Date.now() };
+        localStorage.setItem(SAVE_KEY, JSON.stringify(toSave));
+        apiSaveGame(toSave);
         return prev;
       });
-    }, 5000);
+    }, 30000);
     return () => clearInterval(saveInterval);
-  }, []);
+  }, [dbLoaded]);
 
   const getSynergyBonus = useCallback(() => checkSynergies(state), [checkSynergies, state]);
   const getUpgradeCost = useCallback((charId: string) => {
@@ -268,6 +298,7 @@ export const useGameEngine = () => {
     state,
     particles,
     bossShake,
+    dbLoaded,
     handleClick,
     buyCharacter,
     upgradeCharacter,
