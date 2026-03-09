@@ -1,6 +1,34 @@
 import { useNavigate } from 'react-router-dom';
+import { useEffect, useRef, useState } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import Icon from '@/components/ui/icon';
+
+function useOnlineCounter() {
+  const [count, setCount] = useState(0);
+  const base = useRef(0);
+
+  useEffect(() => {
+    // стартовое значение — рандом от 1.2k до 3.8k
+    base.current = 1200 + Math.floor(Math.random() * 2600);
+    setCount(base.current);
+
+    const interval = setInterval(() => {
+      // случайное изменение: от -15 до +22
+      const delta = Math.floor(Math.random() * 38) - 15;
+      base.current = Math.max(900, Math.min(5000, base.current + delta));
+      setCount(base.current);
+    }, 2800 + Math.random() * 1400);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  return count;
+}
+
+function formatOnline(n: number): string {
+  if (n >= 1000) return (n / 1000).toFixed(1).replace('.0', '') + 'k';
+  return String(n);
+}
 
 const FEATURES = [
   { icon: 'Swords', title: 'Эпические битвы', desc: 'Сражайся с легендарными боссами и добывай редкие трофеи' },
@@ -18,6 +46,7 @@ const HEROES = [
 export default function LandingPage() {
   const navigate = useNavigate();
   const { user } = useAuth();
+  const online = useOnlineCounter();
 
   return (
     <div className="min-h-screen" style={{ background: 'radial-gradient(ellipse at top, #1A1A2E 0%, #0A0A0F 70%)' }}>
@@ -28,6 +57,23 @@ export default function LandingPage() {
           <span className="text-2xl font-cinzel font-bold text-gold glow-text-gold tracking-widest">EPIC</span>
           <span className="text-2xl font-cinzel font-bold text-white tracking-widest">CLICKER</span>
         </div>
+
+        {/* Online counter */}
+        <div className="flex items-center gap-1.5 px-3 py-1 rounded-full"
+          style={{ background: 'rgba(34,197,94,0.08)', border: '1px solid rgba(34,197,94,0.2)' }}>
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-60"
+              style={{ background: '#22c55e' }} />
+            <span className="relative inline-flex rounded-full h-2 w-2"
+              style={{ background: '#22c55e' }} />
+          </span>
+          <span className="font-rajdhani text-xs font-bold tabular-nums transition-all duration-700"
+            style={{ color: '#4ade80', minWidth: '2.5rem' }}>
+            {online > 0 ? formatOnline(online) : '—'}
+          </span>
+          <span className="font-rajdhani text-xs" style={{ color: 'rgba(74,222,128,0.5)' }}>online</span>
+        </div>
+
         <div className="flex gap-3">
           {user ? (
             <button
