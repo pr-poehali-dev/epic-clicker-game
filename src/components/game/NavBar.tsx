@@ -9,6 +9,7 @@ const navItems: NavItem[] = [
   { id: 'characters', label: 'Герои', emoji: '🦸' },
   { id: 'upgrades', label: 'Улучш', emoji: '⬆️' },
   { id: 'achievements', label: 'Достиж', emoji: '🏆' },
+  { id: 'leaderboard', label: 'Топ', emoji: '👑' },
   { id: 'inventory', label: 'Инвент', emoji: '🎒' },
   { id: 'shop', label: 'Магазин', emoji: '🏪' },
   { id: 'stats', label: 'Стат', emoji: '📊' },

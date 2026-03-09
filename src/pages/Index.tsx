@@ -10,8 +10,9 @@ import StatsScreen from '@/components/game/StatsScreen';
 import SettingsScreen from '@/components/game/SettingsScreen';
 import NavBar from '@/components/game/NavBar';
 import TopBar from '@/components/game/TopBar';
+import LeaderboardScreen from '@/components/game/LeaderboardScreen';
 
-type Screen = 'home' | 'characters' | 'upgrades' | 'achievements' | 'inventory' | 'shop' | 'stats' | 'settings';
+type Screen = 'home' | 'characters' | 'upgrades' | 'achievements' | 'leaderboard' | 'inventory' | 'shop' | 'stats' | 'settings';
 
 export default function Index() {
   const [screen, setScreen] = useState<Screen>('home');
@@ -34,6 +35,7 @@ export default function Index() {
       case 'characters': return <CharactersScreen engine={engine} />;
       case 'upgrades': return <UpgradesScreen engine={engine} />;
       case 'achievements': return <AchievementsScreen engine={engine} />;
+      case 'leaderboard': return <LeaderboardScreen />;
       case 'inventory': return <InventoryScreen engine={engine} />;
       case 'shop': return <ShopScreen engine={engine} />;
       case 'stats': return <StatsScreen engine={engine} />;
